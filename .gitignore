@@ -1,0 +1,7 @@
+*.exe
+*.txt
+.clangd
+makefile
+*.dll
+*.ppm
+test.cpp
