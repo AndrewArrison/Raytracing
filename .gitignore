@@ -5,3 +5,4 @@ makefile
 *.dll
 *.ppm
 test.cpp
+*.pdf

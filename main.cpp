@@ -1,7 +1,7 @@
 // ================================================
 // File: main.cpp
 // Created on: 2025-06-03 21:17:33
-// Last modified: 2025-06-04 21:39:09
+// Last modified: 2025-06-05 11:47:02
 // Created by: Alwin R Ajeesh
 // ================================================
 #include <GLM/common.hpp>
@@ -52,7 +52,10 @@ glm::dvec3 ray_color(const ray& r)
 	double t = hit_sphere(glm::dvec3(0, 0, -1), 0.5, r);
 	if (t > 0.0) {
 		glm::dvec3 Normal = glm::normalize(r.at(t) - glm::dvec3(0, 0, -1));
-		return 0.5*(Normal + glm::dvec3(1.0));
+		glm::dvec3 l = glm::normalize(glm::dvec3(1, 1, 0.4) - r.at(t));
+		double f = glm::max(0.0, glm::dot(Normal, l));
+		// return 0.5*(Normal + glm::dvec3(1.0));
+		return glm::dvec3(1,0,1)*f;
 	}
 	glm::dvec3 unit_direction = r.getDirection();
 	double blend_factor = 0.5*(unit_direction.y + 1.0);
@@ -62,9 +65,6 @@ glm::dvec3 ray_color(const ray& r)
 
 void render(SDL_Renderer* renderer, SDL_Texture* texture, glm::dvec3& camera_center, glm::dvec3& pixel00_loc, glm::dvec3& pixel_delta_w, glm::dvec3& pixel_delta_h, SDL_FRect& rect)
 {
-	SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
-	SDL_RenderClear(renderer);
-	SDL_RenderPresent(renderer);
 	//pixel buffer
 	uint32_t* pixels = new uint32_t[image_width * image_height];
 	//Fill pixel buffer with image data
@@ -107,7 +107,6 @@ int main()
 	
 	int focal_length = 1.0;
 	glm::dvec3 camera_center = glm::dvec3(0);
-	camera_center.z += 1;
 	glm::dvec3 viewport_w = glm::dvec3(viewport_width, 0, 0);
 	glm::dvec3 viewport_h = glm::dvec3(0, -viewport_height, 0);
 	glm::dvec3 pixel_delta_w = viewport_w / double(image_width);
