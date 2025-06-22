@@ -1,7 +1,7 @@
 // ================================================
 // File: sphere.hpp
 // Created on: 2025-06-05 14:36:58
-// Last modified: 2025-06-05 14:47:46
+// Last modified: 2025-06-06 12:59:06
 // Created by: Alwin R Ajeesh
 // ================================================
 
@@ -16,6 +16,7 @@ public:
 	Sphere(const glm::dvec3& center, const double radius) : m_Center(center), m_Radius(radius) { }
 
 	double intersect(const ray& r) const;
+	glm::dvec3 getCenter() const { return m_Center; }
 
 	
 private:
